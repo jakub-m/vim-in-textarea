@@ -1,0 +1,8 @@
+name: VIM in textarea demo
+description: Add VIM functionality to textarea
+authors:
+   - Jakub Mikians
+
+resources:
+  - https://github.com/jakub-m/vim-in-textarea
+     
