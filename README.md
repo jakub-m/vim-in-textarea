@@ -3,7 +3,9 @@ vim-in-textarea
 
 Add VIM functionality to textarea. Implemented as a single module in JavaScript, no jQuery needed.
 
-Check online demo here
+Check online jsfiddle demo [here][demo-link]
+
+[demo-link]: http://jsfiddle.net/gh/gist/mootools/1.2/4397764/
 
 Licensing
 =========
