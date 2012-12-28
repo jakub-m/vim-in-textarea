@@ -1,0 +1,79 @@
+<html>
+  <head>
+
+  <script src='../jsvim.js'></script>
+  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+
+  <script>
+  var get_keys = function(dict) {
+    var k = []
+    $.each( dict, function(idx, value){
+      k.push(idx)
+    })
+    return k
+  }
+
+  var enumerate_commands = function(node, prefix) {
+    prefix = (undefined === prefix) ? '' : prefix
+    var keys = get_keys( node.nodes )
+
+    var keys_leafs = keys.filter(function(element, index, arr){
+      return node.nodes[element].node.is_leaf()
+    })
+
+    var keys_branches = keys.filter(function(element, index, arr){
+      return ! node.nodes[element].node.is_leaf()
+    })
+
+    keys_leafs = keys_leafs.sort()
+    keys_branches = keys_branches.sort()
+
+    if ( 1 === keys_leafs.length ) {
+      log(prefix+keys_leafs[0])
+    }
+    else {
+      //log(prefix)
+      //var space = spacer(prefix.length, '-')
+      //log( space + ' ' + keys_leafs.join(" ") )
+      var t = (0 === prefix.length) ? '' : (prefix+': ')
+      log( t + keys_leafs.join(" ") )
+    }
+
+    $.each( keys_branches, function(idx, value){
+      enumerate_commands( node.nodes[value].node, prefix + value )
+    })
+
+  }
+
+  var spacer = function(n, c) {
+    c = (undefined === c) ? ' ' : c
+    var sp = ''
+    for( var i = 0; i < n; i++ ) {
+      sp += c
+    }
+    return sp
+  }
+
+  var log = function(message) {
+    var p = $('<div>')
+    p.text(message)
+    $('#log').append(p)
+  }
+
+  $(document).ready(function(){
+    var t = build_tree_command_mode()
+
+    enumerate_commands( t ) 
+
+
+//    $('#log').append('<p>hello</p>')
+  })
+  </script>
+
+  </head>
+  <body>
+  <div id='log'>
+  </div>
+  </body>
+</html>
+
