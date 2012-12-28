@@ -89,6 +89,7 @@ function VIM(ctrees) {
     var c = event_to_key(event)
     if ( c === '<Escape>' ) {
       this.reset()
+      pass_keys = false
     }
     else if ( this.is_mode(INSERT) ) {
       if (c === '<Enter>') {
@@ -101,6 +102,11 @@ function VIM(ctrees) {
     else if (c !== null) {
       this.accept_key( c )
       pass_keys = false
+    }
+
+    if ( false === pass_keys ) {
+      event.preventDefault()
+      event.stopPropagation() 
     }
     return pass_keys
   }
@@ -167,7 +173,7 @@ function VIM(ctrees) {
   }
 
   this.reset_mode = function() {
-    this.m_mode = COMMAND
+    this.set_mode( COMMAND )
   }
 
   this.reset_commands = function() {
