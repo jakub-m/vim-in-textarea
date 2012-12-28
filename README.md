@@ -32,7 +32,7 @@ Author and licensing
 
 This work is released under GNU GPL licence. Exceptions are possible for commercial/closed source works.
 
-Author: Jakub Mikians[linkedin]
+Author: [Jakub Mikians][linkedin]
 
 [linkedin]: http://www.linkedin.com/pub/jakub-mikkians/19/549/608
 
