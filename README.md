@@ -1,16 +1,17 @@
-vim-in-textarea
-===============
+# vim-in-textarea #
 
-Add VIM functionality to textarea. Implemented as a single module in JavaScript, no jQuery needed.
-
-Check online jsfiddle demo [here][demo-link].
+Add VIM functionality to textarea. Check online jsfiddle demo [here][demo-link].
 
 [demo-link]: http://jsfiddle.net/gh/gist/mootools/1.2/4397764/
 
-The final goal is to embed it into a browser extension and use to edit text areas freely. If you have spare time to roll out a simple plug-in, mail me.
+Implemented as a single module in JavaScript, no jQuery needed.  By default, it
+does not log anything (i.e., if it is in *command* or *insert* mode), neither
+it alters textarea look or style.
 
-Available commands
-==================
+The final goal is to embed it into a **browser extension** and use to edit text
+areas freely. If you have spare time to roll out a simple plug-in, mail me.
+
+# Available commands #
 
 Currently available commands (automagically generated from command tree):
 
@@ -29,10 +30,11 @@ Currently available commands (automagically generated from command tree):
     ygg
     yi: " ' ( ) < > W [ ] w { }
 
-Author and licensing
-=========
+# Licensing and author #
 
-This work is released under GNU GPL licence. Exceptions are possible for commercial or closed source works.
+This work is released under GNU GPL licence. Exceptions are possible for
+commercial or closed source works.  If you use the script, **let me know**! I
+am happy to hear your feedback and see the script working in the wild.
 
 Author: [Jakub Mikians][linkedin]
 
