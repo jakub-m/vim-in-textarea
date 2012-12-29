@@ -1,16 +1,19 @@
 <html>
   <head>
     <script src="../jsvim.js"></script>
-    <script src="fiddle.js"></script>
+<!--    <script src="https://raw.github.com/jakub-m/vim-in-textarea/master/jsvim.js"></script> -->
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="fiddle.js"></script>
     <style>
-    textarea {
-      font-family: Courier, "Courier New", monospace 
+    textarea, div {
+      font-family: Courier, "Courier New", monospace;
+      font-size: 11px;
     }
     </style>
   </head>
   <body>
-  <textarea id='sandbox' rows="25" cols="80">
+  <textarea id='sandbox' rows='20' style='width:100%'>
 
 debug commands appear in console log
 
@@ -21,6 +24,12 @@ debug commands appear in console log
 ... and many others!
 
   </textarea>
+
+  <div style='color:red'>Log:</div>
+
+  <div id='log'>
+  </div>
+
   </body>
 </html>
 
