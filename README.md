@@ -9,7 +9,10 @@ does not log anything (i.e., if it is in *command* or *insert* mode), neither
 it alters textarea look or style.
 
 The final goal is to embed it into a **browser extension** and use to edit text
-areas freely. If you have spare time to roll out a simple plug-in, mail me.
+areas freely. If you have spare time to roll out a simple extension (e.g., with
+[Greasemonkey][greasemonkey]), mail me.
+
+[greasemonkey]: http://en.wikipedia.org/wiki/Greasemonkey
 
 # Available commands #
 
@@ -32,9 +35,12 @@ Currently available commands (automagically generated from command tree):
 
 # Licensing and author #
 
-This work is released under GNU GPL licence. Exceptions are possible for
-commercial or closed source works.  If you use the script, **let me know**! I
-am happy to hear your feedback and see the script working in the wild.
+This work is released under [GNU GPL version 3][gpl] licence. Exceptions are
+possible for commercial or closed source works.  If you use the script, **let
+me know**! I am happy to hear your feedback and see the script working in the
+wild.
+
+[gpl]: http://www.gnu.org/licenses/gpl.html
 
 Author: [Jakub Mikians][linkedin]
 
