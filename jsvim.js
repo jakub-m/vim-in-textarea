@@ -76,17 +76,51 @@ var _proxy = function( func, context ) {
   }
 }
 
+var __special_keys = {
+   8:'Backspace',
+   9:'Tab',
+  13:'Enter',
+  27:'Escape',
+  33:'PageUp',
+  34:'PageDown',
+  35:'End',
+  36:'Home',
+  37:'Left',
+  38:'Up',
+  39:'Right',
+  40:'Down',
+  45:'Insert',
+  46:'Delete',
+}
+
 function VIM(ctrees) {
   this.attach_to = function(m_selector) {
     this.m_selector = m_selector
-    //this.m_selector.on("keydown", _proxy( this.on_keydown, this) )
+    m_selector.onkeypress = _proxy( this.on_keypress, this)
     m_selector.onkeydown = _proxy( this.on_keydown, this)
     this.reset()
   }
 
-  this.on_keydown = function(event) {
+  this.on_keypress = function(e){
+    var c = e.keyCode
+    var m = __special_keys[c]
+    if (undefined === m) {
+      var m = String.fromCharCode( c )
+      this.on_key( m )
+    }
+  }
+  
+  this.on_keydown = function(e){
+    var c = e.keyCode
+    var m = __special_keys[c]
+    if (undefined !== m) {
+      m = '<' + m + '>'
+      this.on_key(m)
+    }
+  }
+
+  this.on_key = function(c) {
     var pass_keys
-    var c = event_to_key(event)
     if ( c === '<Escape>' ) {
       this.reset()
       pass_keys = false
@@ -297,101 +331,6 @@ function getCaret(el) {
     return rc.text.length; 
   }  
   return 0; 
-}
-
-// http://stackoverflow.com/questions/2220196/how-to-decode-character-pressed-from-jquerys-keydowns-event-handler
-var _to_ascii = {
-  '188': '44',
-  '109': '45',
-  '190': '46',
-  '191': '47',
-  '192': '96',
-  '220': '92',
-  '222': '39',
-  '221': '93',
-  '219': '91',
-  '173': '45',
-  '187': '61', //IE Key codes
-  '186': '59', //IE Key codes
-  '189': '45'  //IE Key codes
-}
-
-var _shift_ups = {
-  "96": "~",
-  "49": "!",
-  "50": "@",
-  "51": "#",
-  "52": "$",
-  "53": "%",
-  "54": "^",
-  "55": "&",
-  "56": "*",
-  "57": "(",
-  "48": ")",
-  "45": "_",
-  "61": "+",
-  "91": "{",
-  "93": "}",
-  "92": "|",
-  "59": ":",
-  "39": "\"",
-  "44": "<",
-  "46": ">",
-  "47": "?"
-};
-
-var _special_keys = {
-    8:'Backspace',
-    9:'Tab',
-   13:'Enter',
-   27:'Escape',
-   33:'PageUp',
-   34:'PageDown',
-   35:'End',
-   36:'Home',
-   37:'Left',
-   38:'Up',
-   39:'Right',
-   40:'Down',
-   45:'Insert',
-   46:'Delete',
-  112:'F1',
-  113:'F2',
-  114:'F3',
-  115:'F4',
-  116:'F5',
-  117:'F6',
-  118:'F7',
-  119:'F8',
-  120:'F9',
-  121:'F10',
-  122:'F11',
-  123:'F12'
-};
-
-var event_to_key = function(e) {
-  var c = e.which;
-  if ( c >= 16 && c <= 18 ) {
-    c = null
-  }
-  else if ( _special_keys[c] !== undefined ) {
-    var prefix = '' + (e.shiftKey ? 'S' : '') + (e.ctrlKey ? 'C' : '')
-    prefix = (prefix.length > 0) ? (prefix+'-') : ''
-    c = '<' + prefix + _special_keys[c] + '>'
-  }
-  else  {
-    if (_to_ascii.hasOwnProperty(c)) {
-      c = _to_ascii[c];
-    }
-    if (!e.shiftKey && (c >= 65 && c <= 90)) {
-        c = String.fromCharCode(c + 32);
-    } else if (e.shiftKey && _shift_ups.hasOwnProperty(c)) {
-        c = _shift_ups[c];
-    } else {
-        c = String.fromCharCode(c);
-    }
-  }
-  return c
 }
 
 /* 
@@ -650,25 +589,6 @@ var till_next_word_plus = function(text, pos) {
   return [ pos, g[0] + g[1] - pos ]
 }
 
-//var find_word_bounds_aggr = function( text, pos ) {
-//  var p = /(\s(?=\S))|(\S(?=\s))/g
-//  return _find_word_bounds( text, pos, p )
-//}
-
-//var _find_word_bounds = function( text, pos, regex ) {
-//  var m, ileft = 0, iright
-//  while ( (m=regex.exec(text)) !== null ) {
-//    var i = m.index + 1
-//    if ((ileft === undefined) || (i <= pos)) {
-//      ileft = i
-//    }
-//    if ((iright === undefined) && (i > pos)) {
-//      iright = i
-//    }
-//  }
-//  iright = (iright === undefined) ? (text.length) : iright
-//  return [ileft,iright]
-//}
 
 ///* decorator - find a pattern with fn_find and latter find the trailing spaces */
 //var with_trailing_spaces = function( fn_find ) { // todo: refactor, remove?
