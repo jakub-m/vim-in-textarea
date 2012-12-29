@@ -993,11 +993,16 @@ var move_to_prev_word_plus = function(text, pos) {
 }
 
 var move_to_word_in_next_line = function(text, pos) {
+  var new_pos
   var xline = select_next_line(text, pos)
-  var nspaces = count_space_from( text, xline[0] )
-  return xline[0] + nspaces
+  if (undefined === xline) {
+    new_pos = pos
+  } else {
+    var nspaces = count_space_from( text, xline[0] )
+    new_pos = xline[0] + nspaces
+  }
+  return new_pos
 }
-
 
 var move_to_very_beginning = function(text, pos) {
   return 0
