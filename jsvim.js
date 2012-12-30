@@ -1,4 +1,4 @@
-//[1]appAPI.ready(function($) {
+//ext//appAPI.ready(function($) {
 /* (c) jakub.mikians@gmail.com 2012, 2013 */
 
 /*===================================================================*/
@@ -100,7 +100,7 @@ function VIM(ctrees) {
     m_selector.onkeypress = _proxy( this.on_keypress, this)
     m_selector.onkeydown = _proxy( this.on_keydown, this)
     this.reset()
-//[1]    window.__refocus = true
+//ext//    window.__refocus = true
   }
 
   this.on_keypress = function(e){
@@ -434,9 +434,9 @@ var build_tree_command_mode = function() {
   var _y = make_node_dy('y')
     .set_choices( choices_ai )
 
-//[1]  var _colon = node()
-//[1]    .set_choice('q', node({action: act_unfocus}))
-//[1]
+//ext//  var _colon = node()
+//ext//    .set_choice('q', node({action: act_unfocus}))
+//ext//
   var _r = node()
     .set_choices( make_choices_for_navigation({action: act_move}))
     .set_choices( make_choices_for_digits() )
@@ -459,7 +459,7 @@ var build_tree_command_mode = function() {
     .set_choice('v', node({action: act_visual_mode}))
     .set_choice('x', node({action: act_delete_char}))
     .set_choice('y', _y,  {action: act_yank_range})
-//[1]    .set_choice(':', _colon)
+//ext//    .set_choice(':', _colon)
 
   return _r
 }
@@ -941,12 +941,12 @@ var act_merge_lines = function(vim, cdata) {
   vim.set_pos( endl )
 }
 
-//[1]var act_unfocus = function(vim, cdata) {
-//[1]  vim.log('--unfocus--')
-//[1]  window.__refocus = false
-//[1]  vim.m_selector.blur()
-//[1]}
-//[1]
+//ext//var act_unfocus = function(vim, cdata) {
+//ext//  vim.log('--unfocus--')
+//ext//  window.__refocus = false
+//ext//  vim.m_selector.blur()
+//ext//}
+//ext//
 /* MOVE -- move functions, are launched in VIM context */
 
 var move_right = function(text, pos) {
@@ -1075,36 +1075,36 @@ var selection_with = function( cdata, text, pos ) {
 //  v.attach_to( $('#sandbox') )
 //});
 
-//[1] /* hook vim on click into textarea */
-//[1] $(document).on('focus', 'textarea', function(event){
-//[1]    console.log( 'FOCUS' )
-//[1]    $(this).off('keyup keydown keypress')
-//[1]    //$(this).on('keyup keydown keypress', function(e){ 
-//[1]    //  e.stopPropagation() 
-//[1]    //  e.preventDefault()
-//[1]    //  return false
-//[1]    //})
-//[1]
-//[1]    if ( undefined === this.__vim_is_attached ) {
-//[1]      var v = new VIM()
-//[1]      v.on_log = function(m){console.log(m)}
-//[1]      v.attach_to( this )
-//[1]      this.__vim_is_attached = true
-//[1]    } else {
-//[1]      console.log('vim already attached')
-//[1]    }
-//[1] })
-//[1]
-//[1] $(document).on('blur', 'textarea', function(event){
-//[1]    //$(this).off('keyup keydown keypress')
-//[1]    if (true === window.__refocus) {
-//[1]      console.log('blur: refocus')
-//[1]      $(this).focus()
-//[1]    } else {
-//[1]      console.log('blur: don\'t refocus')
-//[1]    }
-//[1]
-//[1]    return false
-//[1] })
-//[1]
-//[1]});
+//ext// /* hook vim on click into textarea */
+//ext// $(document).on('focus', 'textarea', function(event){
+//ext//    console.log( 'FOCUS' )
+//ext//    $(this).off('keyup keydown keypress')
+//ext//    //$(this).on('keyup keydown keypress', function(e){ 
+//ext//    //  e.stopPropagation() 
+//ext//    //  e.preventDefault()
+//ext//    //  return false
+//ext//    //})
+//ext//
+//ext//    if ( undefined === this.__vim_is_attached ) {
+//ext//      var v = new VIM()
+//ext//      v.on_log = function(m){console.log(m)}
+//ext//      v.attach_to( this )
+//ext//      this.__vim_is_attached = true
+//ext//    } else {
+//ext//      console.log('vim already attached')
+//ext//    }
+//ext// })
+//ext//
+//ext// $(document).on('blur', 'textarea', function(event){
+//ext//    //$(this).off('keyup keydown keypress')
+//ext//    if (true === window.__refocus) {
+//ext//      console.log('blur: refocus')
+//ext//      $(this).focus()
+//ext//    } else {
+//ext//      console.log('blur: don\'t refocus')
+//ext//    }
+//ext//
+//ext//    return false
+//ext// })
+//ext//
+//ext//});
