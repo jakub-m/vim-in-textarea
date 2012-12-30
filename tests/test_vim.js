@@ -55,8 +55,8 @@ test("Mark word", function() {
   deepEqual( find_word('!!! !!! !!!', 5), [4,3] )
 })
 
-test("Mark word with trailing spaces", function() {
-  var t = "abc def ghi abc def ghi"
+test('Find word with spaces after', function() {
+  var t = 'abc def ghi abc def ghi'
   deepEqual( find_word_with_spaces_after(t, 0),  [0,4] )
   deepEqual( find_word_with_spaces_after(t, 5),  [4,4] )
   deepEqual( find_word_with_spaces_after(t, 16), [16,4] )
@@ -65,6 +65,28 @@ test("Mark word with trailing spaces", function() {
   deepEqual( find_word_with_spaces_after('!!! !!! !!!', 5), [4,4] )
   deepEqual( find_word_with_spaces_after('    abc def', 2), [0,4])
 })
+
+//test('Find word with spaces before',function(){
+//  var t = '  23  67 90'
+//  deepEqual( find_word_with_spaces_before(t,3), [0,4] )
+//  deepEqual( find_word_with_spaces_before(t,6), [4,4] )
+//  deepEqual( find_word_with_spaces_before(t,7), [4,4] )
+////  deepEqual( find_word_with_spaces_before(t,8), [8,3] )
+//  deepEqual( find_word_with_spaces_before(t,9), [8,3] )
+//  deepEqual( find_word_with_spaces_before(t,10), [8,3] )
+//})
+
+test('Count spaces to', function(){
+  var t = 'abc   def ghi '
+  equal( count_space_to(t, 0), 0 )
+  equal( count_space_to(t, 3), 0 )
+  equal( count_space_to(t, 6), 3 )
+  equal( count_space_to(t, 7), 0 )
+  equal( count_space_to(t,10), 1 )
+  equal( count_space_to(t,14), 1 )
+  equal( count_space_to(t,15), 0 )
+})
+
 
 test("Mark WORD", function() {
   var t = '000.000 000.000 000.000'

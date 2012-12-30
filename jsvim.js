@@ -567,6 +567,12 @@ var d_with_spaces_after = function(fn){
   }
 }
 
+//var find_word_with_spaces_before = function(text, pos) {
+//  var xs = find_word(text, pos)
+//  var n = count_space_to(text, xs[0])
+//  return [ xs[0]-n, xs[1]+n ]
+//}
+
 var find_word_plus_with_trailing_spaces = function(text, pos) {
   var g = find_word_plus(text, pos)
   var n = count_space_from(text, g[0]+g[1])
@@ -756,6 +762,17 @@ var skip_spaces = function(search_func) {
 var count_space_from = function(text, pos) {
   var m = /^[ ]+/.exec(text.substr(pos))
   return (m===null) ? 0 : m[0].length
+}
+
+var count_space_to = function(text,pos) {
+  var k
+  if (pos > text.length) {
+    k = 0
+  } else {
+    var m = /[ ]+$/.exec(text.substr(0,pos))
+    k = (m===null) ? 0 : m[0].length
+  }
+  return k
 }
 
 var insert_at = function( base, chunk, pos ) {
@@ -1000,12 +1017,14 @@ var move_to_end_of_word_plus = function(text, pos) {
 }
 
 var move_to_prev_word = function(text, pos) {
-  var xs = find_word_with_spaces_after(text, pos - 1)
-  return xs[0] 
+  var k = count_space_to(text, pos) + 1
+  var xs = find_word(text,pos - k)
+  return xs[0]
 }
 
 var move_to_prev_word_plus = function(text, pos) {
-  var xs = find_word_plus_with_trailing_spaces( text, pos - 1 )
+  var k = count_space_to(text, pos) + 1
+  var xs = find_word_plus(text,pos - k)
   return xs[0]
 }
 
