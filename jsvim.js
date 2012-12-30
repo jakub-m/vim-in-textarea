@@ -1,5 +1,9 @@
-//ext//appAPI.ready(function($) {
 /* (c) jakub.mikians@gmail.com 2012, 2013 */
+
+/* commented parts starting with //ext// should make crossrider extension out
+ * of this script  */
+
+//ext//appAPI.ready(function($) {
 
 /*===================================================================*/
 /* Command tree */
@@ -1073,26 +1077,9 @@ var selection_with = function( cdata, text, pos ) {
   return xs
 }
 
-///* === READY === */
-//
-//window.onload = function(){
-//  var vim = new VIM()
-//  vim.on_log = function(x){ console.log('VIM: ' + x.toString()) }
-//
-//  var target = document.getElementById('sandbox')
-//  if (target !== null) {
-//    vim.attach_to( target )
-//    target.focus()
-//  }
-//}
+/* === READY === */
 
 /* crossrider hook */
-//appAPI.ready(function($) {
-//  var ctrees = build_sequence_trees()
-//  var v = new VIM(ctrees)
-//  $('#sandbox').focus()
-//  v.attach_to( $('#sandbox') )
-//});
 
 //ext// /* hook vim on click into textarea */
 //ext// $(document).on('focus', 'textarea', function(event){
