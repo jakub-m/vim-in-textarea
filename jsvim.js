@@ -102,26 +102,31 @@ function VIM(ctrees) {
   }
 
   this.on_keypress = function(e){
+    var p = true
     var c = e.keyCode
     var m = __special_keys[c]
     if (undefined === m) {
       var m = String.fromCharCode( c )
-      this.on_key( m )
+      p = this.on_key( m, e )
     }
+    return p
   }
   
   this.on_keydown = function(e){
+    var p = true
     var c = e.keyCode
     var m = __special_keys[c]
     if (undefined !== m) {
       m = '<' + m + '>'
-      this.on_key(m)
+      p = this.on_key(m, e)
     }
+    return p
   }
 
-  this.on_key = function(c) {
+  this.on_key = function(c, event) {
+    this.log('"' + c + '"')
     var pass_keys
-    if ( c === '<Escape>' ) {
+    if ('<Escape>' === c) {
       this.reset()
       pass_keys = false
     }
