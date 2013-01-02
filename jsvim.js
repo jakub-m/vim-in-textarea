@@ -113,8 +113,7 @@ function VIM(ctrees) {
     if (undefined === m ) {
       p = true
     } else {
-      this.on_key( '<'+m+'>', event )
-      p = false
+      p = this.on_key( '<'+m+'>', event )
     }
     return p
   }
