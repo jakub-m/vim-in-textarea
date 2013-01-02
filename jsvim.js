@@ -113,15 +113,15 @@ function VIM(ctrees) {
     if (undefined === m ) {
       p = true
     } else {
-      this.on_key( '<'+m+'>', e )
+      this.on_key( '<'+m+'>', event )
       p = false
     }
     return p
   }
 
-  this.on_keypress = function(e){
-    var m = String.fromCharCode( e.keyCode )
-    var p = this.on_key( m, e )
+  this.on_keypress = function(event){
+    var m = String.fromCharCode( event.keyCode )
+    var p = this.on_key( m, event )
     return p
   }
   
