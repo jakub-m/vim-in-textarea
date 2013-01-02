@@ -101,34 +101,30 @@ var __special_keys = {
 function VIM(ctrees) {
   this.attach_to = function(m_selector) {
     this.m_selector = m_selector
-    m_selector.onkeypress = _proxy( this.on_keypress, this)
     m_selector.onkeydown = _proxy( this.on_keydown, this)
+    m_selector.onkeypress = _proxy( this.on_keypress, this)
     this.reset()
 //ext//    window.__refocus = true
   }
 
-  this.on_keypress = function(e){
-    var p = true
-    var c = e.keyCode
-    var m = __special_keys[c]
-    if (undefined === m) {
-      var m = String.fromCharCode( c )
-      p = this.on_key( m, e )
-    }
-    return p
-  }
-  
-  this.on_keydown = function(e){
-    var p = true
-    var c = e.keyCode
-    var m = __special_keys[c]
-    if (undefined !== m) {
-      m = '<' + m + '>'
-      p = this.on_key(m, e)
+  this.on_keydown = function(event){
+    var p 
+    var m = __special_keys[ event.keyCode ]
+    if (undefined === m ) {
+      p = true
+    } else {
+      this.on_key( '<'+m+'>', e )
+      p = false
     }
     return p
   }
 
+  this.on_keypress = function(e){
+    var m = String.fromCharCode( e.keyCode )
+    var p = this.on_key( m, e )
+    return p
+  }
+  
   this.on_key = function(c, event) {
     this.log('"' + c + '"')
     var pass_keys
