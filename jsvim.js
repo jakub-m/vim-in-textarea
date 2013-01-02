@@ -531,9 +531,16 @@ var make_choices_for_digits = function(){
  * is position of the element and len is length of element. len can be 0 */
 
 var find_word = function( text, pos ) {
-  var p = /(\s(?=\S))|(\w(?=\W))|(\S(?=\s))|(\W(?=\w))/g
+//  var p = /(\s(?=\S))|(\w(?=\W))|(\S(?=\s))|(\W(?=\w))/g
+  var p = /(\s(?=\S))|([^\u0000-\u002f\u003a-\u0040\u005b-\u0060\u007b-\u00bf](?=[\u0000-\u002f\u003a-\u0040\u005b-\u0060\u007b-\u00bf]))|(\S(?=\s))|([\u0000-\u002f\u003a-\u0040\u005b-\u0060\u007b-\u00bf](?=[^\u0000-\u002f\u003a-\u0040\u005b-\u0060\u007b-\u00bf]))/g
   return __find_word( text, pos, p )
 }
+
+// todo : refactor this mess
+
+// non ascii unicode
+///[\u0000-\u002f\u003a-\u0040\u005b-\u0060\u007b-\u00bf]/
+
 
 var find_word_plus = function(text, pos) {
   var p = /(\s(?=\S))|(\S(?=\s))/g

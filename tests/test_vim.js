@@ -53,6 +53,9 @@ test("Mark word", function() {
   deepEqual( find_word(text2, 21), [20,3] )
   deepEqual( find_word('abcdef', 0), [0,6] )
   deepEqual( find_word('!!! !!! !!!', 5), [4,3] )
+  deepEqual( find_word('abłcd',0), [0,5] )
+  deepEqual( find_word('abc...ghi', 0), [0,3] )
+  deepEqual( find_word('abc...ghi', 3), [3,3] )
 })
 
 test('Find word with spaces after', function() {
