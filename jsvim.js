@@ -1093,7 +1093,7 @@ var move_to_line_end = function(text, pos) {
 
 //ext// /* hook vim on click into textarea */
 //ext// $(document).on('focus', 'textarea', function(event){
-//ext//    console.log( 'FOCUS' )
+//ext//    console.log( 'vim: FOCUS' )
 //ext//    $(this).off('keyup keydown keypress')
 //ext//    //$(this).on('keyup keydown keypress', function(e){ 
 //ext//    //  e.stopPropagation() 
@@ -1107,12 +1107,12 @@ var move_to_line_end = function(text, pos) {
 //ext//      v.attach_to( this )
 //ext//      this.__vim_is_attached = true
 //ext//    } else {
-//ext//      console.log('vim already attached')
+//ext//      console.log('vim: already attached')
 //ext//    }
 //ext// })
 //ext//
 //ext// $(document).on('blur', 'textarea', function(event){
-//ext//    //$(this).off('keyup keydown keypress')
+//ext//    //$(this).off('vim: keyup keydown keypress')
 //ext//    if (true === window.__refocus) {
 //ext//      console.log('blur: refocus')
 //ext//      $(this).focus()
@@ -1121,6 +1121,12 @@ var move_to_line_end = function(text, pos) {
 //ext//    }
 //ext//
 //ext//    return false
+//ext// })
+//ext//
+//ext// $(document).on('click',function(event){
+//ext//   console.log('vim: loose focus on click')
+//ext//   window.__refocus = false
+//ext//   $(this).focus()
 //ext// })
 //ext//
 //ext//});
