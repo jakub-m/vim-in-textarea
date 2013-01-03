@@ -179,12 +179,23 @@ function VIM(ctrees) {
     if (this.on_set_mode !== undefined) this.on_set_mode(this)
   }
 
-  this.set_buffer = function(text) {
-    this.log('set_buffer len: ' + text.length)
-    this.m_buffer = text
+  this.insert_to_clipboard = function(text) {
+    this.log('insert_to_clipboard len: ' + text.length)
+    if (this.m_allow_clipboard_reset) {
+      this.m_allow_clipboard_reset = false
+      this.m_buffer = ''
+    }
+    this.m_buffer += text
   }
 
-  this.get_buffer = function() { 
+  /* This is used to distinguish between "2daw" and "dawdaw". In first case,
+   * both lines should be put into the buffer, and in the second case - only
+   * the line deleted at second "daw", overwriting the line from first "daw" */
+  this.allow_clipboard_reset = function(text) {
+    this.m_allow_clipboard_reset = true
+  }
+
+  this.get_clipboard = function() { 
     return this.m_buffer 
   }
 
@@ -274,7 +285,8 @@ function VIM(ctrees) {
         }
         if (nrepeats !== 1) { this.log('n. repeats: ' + nrepeats) }
 
-        for (var i = 0; i < nrepeats; i ++ ) { 
+        this.allow_clipboard_reset()
+        for (var i = 0; i < nrepeats; i++ ) { 
           this.execute_leaf() 
         }
         this.reset_commands()
@@ -876,7 +888,7 @@ var act_yank_range = function(vim, cdata) {
 var __yank = function(vim, cdata) {
   var xs = selection_with.apply( vim, [ cdata, vim.get_text(), vim.get_pos() ] )
   var t = cut_slice( vim.get_text(), xs[0], xs[0] + xs[1] )
-  vim.set_buffer( t.cut )
+  vim.insert_to_clipboard( t.cut )
   return t
 }
 
@@ -885,7 +897,7 @@ var act_delete_char = function(vim, cdata) {
   var t = vim.get_text()
   vim.set_text( t.substr(0,p) + t.substr(p+1) )
   vim.set_pos( p )
-  vim.set_buffer( t.substr(p,1) )
+  vim.insert_to_clipboard( t.substr(p,1) )
   if (cdata.mode !== undefined) {
     vim.set_mode(INSERT)
   }
@@ -917,7 +929,7 @@ var act_delete_current_selection = function(vim, cdata) {
   vim.set_text( t.text)
   vim.set_pos( t.from )
   vim.set_mode(cdata.mode)
-  vim.set_buffer( t.cut )
+  vim.insert_to_clipboard( t.cut )
 }
 
 var act_visual_mode = function(vim, cdata) {
@@ -937,7 +949,7 @@ var act_undo = function(vim, cdata) {
 var act_paste_after = function(vim, cdata) {
   var pos = vim.get_pos()
   __paste(vim, cdata)
-  vim.set_pos( pos + vim.get_buffer().length )
+  vim.set_pos( pos + vim.get_clipboard().length )
 }
 
 var act_paste_before = function(vim, cdata){
@@ -948,7 +960,7 @@ var act_paste_before = function(vim, cdata){
 
 var __paste = function(vim, cdata) {
   var pos = vim.get_pos()
-  var buff = vim.get_buffer()
+  var buff = vim.get_clipboard()
   var t = vim.get_text()
   vim.log('act_paste, length: ' + buff.length )
   vim.set_text( t.substr(0, pos) + buff + t.substr(pos) )
