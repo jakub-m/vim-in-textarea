@@ -1,6 +1,6 @@
 # vim-in-textarea #
 
-Add VIM functionality to textarea. Check online jsfiddle demo [here][demo-link].
+Add a subset of VIM functionality to textarea. Check online jsfiddle demo [here][demo-link].
 
 [demo-link]: http://jsfiddle.net/gh/gist/mootools/1.2/4397764/
 
@@ -13,6 +13,15 @@ areas freely. If you have spare time to roll out a simple extension (e.g., with
 [Greasemonkey][greasemonkey]), mail me.
 
 [greasemonkey]: http://en.wikipedia.org/wiki/Greasemonkey
+
+# Features #
+
+* single JS file
+* no external dependencies (e.g, jQuery)
+* supported visual mode (`v`)
+* undo
+* yank, delete, paste
+* repeat commands
 
 # Available commands #
 
