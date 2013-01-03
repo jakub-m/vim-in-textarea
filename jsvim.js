@@ -162,15 +162,12 @@ function VIM(ctrees) {
     var t = "\n" + repeat_str(' ', n_spaces)
     text = insert_at( text, t, pos )
     
-    this.set_text_no_undo( text )
+    this.set_text( text )
     this.set_pos( pos + t.length )
   }
 
   this.set_mode = function(mode) {
     this.log("set_mode " + mode)
-    if (this.m_mode !== INSERT && mode === INSERT) {
-      this.save_undo_state()
-    }
     if (this.m_mode === COMMAND && mode === VISUAL) {
       // do not change when comming from PENDING - would affect 'viw'
       this.m_selection_from = this.get_pos()
@@ -242,11 +239,6 @@ function VIM(ctrees) {
   }
 
   this.set_text = function(tx) {
-    this.save_undo_state()
-    this.set_text_no_undo(tx)
-  }
-
-  this.set_text_no_undo = function(tx) {
     this.m_selector.value = tx
   }
 
@@ -286,6 +278,9 @@ function VIM(ctrees) {
         if (nrepeats !== 1) { this.log('n. repeats: ' + nrepeats) }
 
         this.allow_clipboard_reset()
+        if ( ! this.m_cdata.dont_save_undo_state ) {
+          this.save_undo_state()
+        }
         for (var i = 0; i < nrepeats; i++ ) { 
           this.execute_leaf() 
         }
@@ -466,7 +461,7 @@ var build_tree_command_mode = function() {
     .set_choice('p', node({action: act_paste_after}))
     .set_choice('P', node({action: act_paste_before}))
     .set_choice('s', node({action: act_delete_char, mode: INSERT}))
-    .set_choice('u', node({action: act_undo}))
+    .set_choice('u', node({action: act_undo, dont_save_undo_state: true}))
     .set_choice('v', node({action: act_visual_mode}))
     .set_choice('x', node({action: act_delete_char}))
     .set_choice('y', _y,  {action: act_yank_range})
@@ -892,6 +887,22 @@ var __yank = function(vim, cdata) {
   return t
 }
 
+/* use either select_func or move_func parameter */
+var selection_with = function( cdata, text, pos ) {
+  var fn, xs
+  fn = cdata.select_func
+  if (fn === undefined) {
+    fn = cdata.move_func
+    var k = fn.apply( this, [ text, pos ] )
+    var len = k - pos
+    xs = (len >= 0) ?  [pos, len] : [pos + len, -len]
+  }
+  else {
+    xs = fn.apply( this, [ text, pos ] )
+  }
+  return xs
+}
+
 var act_delete_char = function(vim, cdata) {
   var p = vim.get_pos()
   var t = vim.get_text()
@@ -941,7 +952,7 @@ var act_undo = function(vim, cdata) {
   if (vim.m_undo_stack.length > 0) {
     vim.log('act_undo')
     var u = vim.m_undo_stack.pop()
-    vim.set_text_no_undo( u.text )
+    vim.set_text( u.text )
     vim.set_pos( u.pos )
   }
 }
@@ -1074,21 +1085,6 @@ var move_to_line_start = function(text, pos) {
 var move_to_line_end = function(text, pos) {
   var s = select_line( text, pos ) 
   return s[0] + s[1]
-}
-
-var selection_with = function( cdata, text, pos ) {
-  var fn, xs
-  fn = cdata.select_func
-  if (fn === undefined) {
-    fn = cdata.move_func
-    var k = fn.apply( this, [ text, pos ] )
-    var len = k - pos
-    xs = (len >= 0) ?  [pos, len] : [pos + len, -len]
-  }
-  else {
-    xs = fn.apply( this, [ text, pos ] )
-  }
-  return xs
 }
 
 /* === READY === */
