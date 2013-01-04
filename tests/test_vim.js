@@ -208,6 +208,12 @@ test('Proxy', function(){
   equal( f20(2), 22 )
 })
 
+test('Expand to line start',function(){
+  var t = 'abc\ndef\nghi'
+  //       012 3456 7890
+  deepEqual( expand_to_line_start(t, [5,1]), [4,2])
+})
+
 // -------------------------------------------------------------------------
 
 //var text1 = "abc\ndef\nghi\n\n"

@@ -442,9 +442,11 @@ var build_tree_command_mode = function() {
   var _y = make_node_dy('y')
     .set_choices( choices_ai )
 
-//ext//  var _colon = node()
-//ext//    .set_choice('q', node({action: act_unfocus}))
-//ext//
+  var _indent = node().set_choices( choices_ai )
+
+// //ext//  var _colon = node()
+// //ext//    .set_choice('q', node({action: act_unfocus}))
+// //ext//
   var _r = node()
     .set_choices( make_choices_for_navigation({action: act_move}))
     .set_choices( make_choices_for_digits() )
@@ -467,7 +469,9 @@ var build_tree_command_mode = function() {
     .set_choice('v', node({action: act_visual_mode}))
     .set_choice('x', node({action: act_delete_char}))
     .set_choice('y', _y,  {action: act_yank_range})
-//ext//    .set_choice(':', _colon)
+    .set_choice('>', _indent, {action: act_indent_increase} )
+
+// //ext//    .set_choice(':', _colon)
 
   return _r
 }
@@ -909,7 +913,7 @@ var act_yank_range = function(vim, cdata) {
 }
 
 var __yank = function(vim, cdata) {
-  var xs = selection_with.apply( vim, [ cdata, vim.get_text(), vim.get_pos() ] )
+  var xs = selection_with.apply( vim, [ cdata, vim.get_text(), vim.get_pos() ] ) // todo, clean 
   var t = cut_slice( vim.get_text(), xs[0], xs[0] + xs[1] )
   vim.insert_to_clipboard( t.cut )
   return t
@@ -1006,6 +1010,7 @@ var __paste = function(vim, cdata) {
 }
 
 var act_merge_lines = function(vim, cdata) {
+  vim.log('act_merge_lines')
   var pos = vim.get_pos()
   var t = vim.get_text()
   var xs = select_line( t, pos )
@@ -1013,6 +1018,30 @@ var act_merge_lines = function(vim, cdata) {
   t = t.substr( 0, endl ) + t.substr( endl + 1 )
   vim.set_text( t )
   vim.set_pos( endl )
+}
+
+var act_indent_increase = function(vim, cdata) {
+  vim.log('act_indent_increase')
+  var xs = selection_with.apply( vim, [ cdata, vim.get_text(), vim.get_pos() ] )
+  xs = expand_to_line_start( vim.get_text(), xs )
+  var g = cut_with( vim.get_text(), xs )
+  g.mid = g.mid.replace(/^/gm, ' ')
+  var new_text = g.left + g.mid + g.right
+  vim.set_text( new_text )
+  vim.set_pos( xs[0] + count_space_from(new_text, xs[0]) )
+}
+
+var expand_to_line_start = function(text, range) {
+  var xs = select_line( text, range[0] )
+  var off = range[0] - xs[0]
+  return [xs[0], range[1] + off ]
+}
+
+var cut_with = function(text, range) {
+  var pos = range[0], len = range[1]
+  return { left: text.substr(0,pos),
+           mid: text.substr(pos,len),
+           right: text.substr(pos+len) }
 }
 
 //ext//var act_unfocus = function(vim, cdata) {
