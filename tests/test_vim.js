@@ -171,6 +171,15 @@ test('Select bracket', function(){
   deepEqual( sel(12), [10,3] )
 })
 
+test('Select paragraph', function(){
+  var t = "abc\n\ndef\n\nghi"
+  //       012 3 4567 8 9012
+  var sel = function(p){ return select_paragraph(t, p) }
+  deepEqual( sel(1), [0,3] )
+  deepEqual( sel(6), [5,3] )
+  deepEqual( sel(11), [10,3] )
+})
+
 test("Partial", function() {
   var add = function(a,b){return a+b}
   equal( add.partial(2)(3), 5 )

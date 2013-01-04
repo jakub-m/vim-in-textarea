@@ -21,7 +21,7 @@ areas freely. If you have spare time to roll out a simple extension (e.g., with
 * supported visual mode (`v`)
 * yank (`y`), delete (`d`), paste (`p`)
 * preserve indention on `Enter`
-* delete / yank words and rackets (`daw`, `diw`, `ca[`, ...)
+* delete / yank words and brackets (`daw`, `diw`, `ca[`, ...)
 * undo (`u`)
 * repeat commands (`5dd`)
 * ...and more!

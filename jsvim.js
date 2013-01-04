@@ -397,6 +397,7 @@ var build_tree_command_mode = function() {
 
   var choices_ai = {
     'a': node()
+      .set_choice('p', node({ select_func: d_with_spaces_after(select_paragraph) }))
       .set_choice('w', node({ select_func: find_word_with_spaces_after }))
       .set_choice('W', node({ select_func: d_with_spaces_after(find_word_plus) }))
       .set_choice("'", node({ select_func: d_in_line( select_quotes.partial("'")) }))
@@ -411,6 +412,7 @@ var build_tree_command_mode = function() {
       .set_choice(']', node({ select_func: select_bounds.partial('[]') })) ,
 
     'i': node()
+      .set_choice('p', node({ select_func: select_paragraph }))
       .set_choice('w', node({ select_func: find_word }))
       .set_choice('W', node({ select_func: find_word_plus }))
       .set_choice("'", node({ select_func: d_inside( d_in_line( select_quotes.partial("'"))) }))
@@ -711,23 +713,38 @@ var select_bounds = function(bounds, text, pos) {
 }
 
 var select_quotes = function(quote, text, pos) {
+  var xs = __select_quotes(quote, text, pos)
+  var i_left = xs[0], i_right = xs[1]
+  return ( (i_left === undefined) || (i_right === undefined) ) ? 
+            [pos,0] : 
+            [i_left, i_right - i_left + 1] 
+}
+
+var __select_quotes = function(quote, text, pos) {
   var i_left, i_right
   for(var i = pos; i >= 0; i--) {
-    if (text.charAt(i) === quote) {
+    //if (text.charAt(i) === quote) {
+    if (text.substr(i, quote.length) === quote) {
       i_left = i
       break
     }
   }
   for(var i = pos + 1; i < text.length; i++) {
-    if (text.charAt(i) === quote) {
+    //if (text.charAt(i) === quote) {
+    if (text.substr(i, quote.length) === quote) {
       i_right = i
       break
     }
   }
+  return [i_left, i_right]
+}
 
-  return ( (i_left === undefined) || (i_right === undefined) ) ? 
-            [pos,0] : 
-            [i_left, i_right - i_left + 1] 
+var select_paragraph = function(text, pos) {
+  var marker = "\n\n"
+  var xs = __select_quotes( marker, text, pos )
+  var i_left = (xs[0] === undefined) ? 0 : (xs[0] + 2)
+  var i_right = (xs[1] === undefined) ? text.length : xs[1]
+  return [i_left, i_right - i_left] 
 }
 
 var trailing_nl = function ( text, pos ) {
