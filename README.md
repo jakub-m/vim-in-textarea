@@ -14,6 +14,8 @@ areas freely. If you have spare time to roll out a simple extension (e.g., with
 
 [greasemonkey]: http://en.wikipedia.org/wiki/Greasemonkey
 
+It is still in development, and it was tested with a few selected browsers/OS configurations.
+
 # Features #
 
 * single JS file
