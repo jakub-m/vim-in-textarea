@@ -178,6 +178,11 @@ test('Select paragraph', function(){
   deepEqual( sel(1), [0,3] )
   deepEqual( sel(6), [5,3] )
   deepEqual( sel(11), [10,3] )
+
+  var sel2 = function(p){ return d_with_whitespaces_after(select_paragraph)(t, p) }
+  deepEqual( sel2(1), [0,5] )
+  deepEqual( sel2(6), [5,5] )
+  deepEqual( sel2(11), [10,3] )
 })
 
 test("Partial", function() {

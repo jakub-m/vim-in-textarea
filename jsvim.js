@@ -397,7 +397,7 @@ var build_tree_command_mode = function() {
 
   var choices_ai = {
     'a': node()
-      .set_choice('p', node({ select_func: d_with_spaces_after(select_paragraph) }))
+      .set_choice('p', node({ select_func: d_with_whitespaces_after(select_paragraph) }))
       .set_choice('w', node({ select_func: find_word_with_spaces_after }))
       .set_choice('W', node({ select_func: d_with_spaces_after(find_word_plus) }))
       .set_choice("'", node({ select_func: d_in_line( select_quotes.partial("'")) }))
@@ -574,13 +574,22 @@ var find_word_with_spaces_after = function(text, pos) {
   return d_with_spaces_after(find_word)(text, pos)
 }
 
-var d_with_spaces_after = function(fn){
+var d_with_spaces_after = function(fn) {
+  return d_with_characters_after(fn, ' ')
+}
+
+var d_with_whitespaces_after = function(fn) {
+  return d_with_characters_after(fn, '\n\s')
+}
+
+var d_with_characters_after = function(fn, characters){
   return function(text, pos) {
     var g = fn(text, pos)
-    var n = count_space_from(text, g[0]+g[1])
+    var n = count_space_from(text, g[0]+g[1], characters)
     return [ g[0], g[1] + n ]
   }
 }
+
 
 //var find_word_with_spaces_before = function(text, pos) {
 //  var xs = find_word(text, pos)
@@ -789,8 +798,10 @@ var skip_spaces = function(search_func) {
   }
 }
 
-var count_space_from = function(text, pos) {
-  var m = /^[ ]+/.exec(text.substr(pos))
+var count_space_from = function(text, pos, characters) {
+  characters = (characters===undefined) ? (' ') : characters
+  var r = new RegExp('^['+characters+']+')
+  var m = r.exec(text.substr(pos))
   return (m===null) ? 0 : m[0].length
 }
 
