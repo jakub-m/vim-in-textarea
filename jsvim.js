@@ -753,11 +753,20 @@ var __select_quotes = function(quote, text, pos) {
 }
 
 var select_paragraph = function(text, pos) {
-  var marker = "\n\n"
-  var xs = __select_quotes( marker, text, pos )
-  var i_left = (xs[0] === undefined) ? 0 : (xs[0] + 2)
-  var i_right = (xs[1] === undefined) ? text.length : xs[1]
-  return [i_left, i_right - i_left] 
+  var regex = /\n\s*\n/g
+  var m, ileft = 0, iright
+  while ( (m=regex.exec(text)) !== null ) {
+    var i0 = m.index + m[0].length
+    if ((ileft === undefined) || (i0 <= pos)) {
+      ileft = i0
+    }
+    var i1 = m.index
+    if ((iright === undefined) && (i1 > pos)) {
+      iright = i1
+    }
+  }
+  iright = (iright === undefined) ? (text.length) : iright
+  return [ileft, iright - ileft]
 }
 
 var trailing_nl = function ( text, pos ) {

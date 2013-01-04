@@ -46,7 +46,7 @@ test('Count whit space from', function(){
 })
 
 var text2 = "abc def ghi abc def ghi"
-test("Mark word", function() {
+test("Find word", function() {
   deepEqual( find_word(text2, 5),  [4,3] )
   deepEqual( find_word(text2, 0),  [0,3] )
   deepEqual( find_word(text2, 16), [16,3] )
@@ -173,16 +173,15 @@ test('Select bracket', function(){
 
 test('Select paragraph', function(){
   var t = "abc\n\ndef\n\nghi"
-  //       012 3 4567 8 9012
-  var sel = function(p){ return select_paragraph(t, p) }
-  deepEqual( sel(1), [0,3] )
-  deepEqual( sel(6), [5,3] )
-  deepEqual( sel(11), [10,3] )
-
-  var sel2 = function(p){ return d_with_whitespaces_after(select_paragraph)(t, p) }
-  deepEqual( sel2(1), [0,5] )
-  deepEqual( sel2(6), [5,5] )
-  deepEqual( sel2(11), [10,3] )
+  var sel = function(t, p){ return select_paragraph(t, p) }
+  var sel2 = function(t,p){ return d_with_whitespaces_after(select_paragraph)(t, p) }
+  deepEqual( sel(t,1), [0,3] )
+  deepEqual( sel(t,6), [5,3] )
+  deepEqual( sel(t,11), [10,3] )
+  deepEqual( sel("aaa\n  \nbbb",8), [7,3] )
+  deepEqual( sel2(t,1), [0,5] )
+  deepEqual( sel2(t,6), [5,5] )
+  deepEqual( sel2(t,11), [10,3] )
 })
 
 test("Partial", function() {
