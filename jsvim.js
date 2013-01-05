@@ -444,9 +444,6 @@ var build_tree_command_mode = function() {
 
   var _selections = node().set_choices( choices_ai )
 
-// //ext//  var _colon = node()
-// //ext//    .set_choice('q', node({action: act_unfocus}))
-// //ext//
   var _r = node()
     .set_choices( make_choices_for_navigation({action: act_move}))
     .set_choices( make_choices_for_digits() )
@@ -471,8 +468,6 @@ var build_tree_command_mode = function() {
     .set_choice('y', _y,  {action: act_yank_range})
     .set_choice('>', _selections, {action: act_indent_increase} )
     .set_choice('<', _selections, {action: act_indent_decrease} )
-
-// //ext//    .set_choice(':', _colon)
 
   return _r
 }
