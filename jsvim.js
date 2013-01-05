@@ -442,7 +442,7 @@ var build_tree_command_mode = function() {
   var _y = make_node_dy('y')
     .set_choices( choices_ai )
 
-  var _indent = node().set_choices( choices_ai )
+  var _selections = node().set_choices( choices_ai )
 
 // //ext//  var _colon = node()
 // //ext//    .set_choice('q', node({action: act_unfocus}))
@@ -469,7 +469,8 @@ var build_tree_command_mode = function() {
     .set_choice('v', node({action: act_visual_mode}))
     .set_choice('x', node({action: act_delete_char}))
     .set_choice('y', _y,  {action: act_yank_range})
-    .set_choice('>', _indent, {action: act_indent_increase} )
+    .set_choice('>', _selections, {action: act_indent_increase} )
+    .set_choice('<', _selections, {action: act_indent_decrease} )
 
 // //ext//    .set_choice(':', _colon)
 
@@ -1033,10 +1034,19 @@ var act_merge_lines = function(vim, cdata) {
 
 var act_indent_increase = function(vim, cdata) {
   vim.log('act_indent_increase')
+  __alter_selection(vim, cdata, function(t){return t.replace(/^/gm, ' ')} )
+}
+
+var act_indent_decrease = function(vim, cdata) {
+  vim.log('act_indent_decrease')
+  __alter_selection(vim, cdata, function(t){return t.replace(/^ /gm, '')} )
+}
+
+var __alter_selection = function(vim, cdata, func) {
   var xs = selection_with.apply( vim, [ cdata, vim.get_text(), vim.get_pos() ] )
   xs = expand_to_line_start( vim.get_text(), xs )
   var g = cut_with( vim.get_text(), xs )
-  g.mid = g.mid.replace(/^/gm, ' ')
+  g.mid = func( g.mid ) 
   var new_text = g.left + g.mid + g.right
   vim.set_text( new_text )
   vim.set_pos( xs[0] + count_space_from(new_text, xs[0]) )
