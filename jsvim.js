@@ -442,7 +442,11 @@ var build_tree_command_mode = function() {
   var _y = make_node_dy('y')
     .set_choices( choices_ai )
 
-  var _selections = node().set_choices( choices_ai )
+  var _indent_inc = make_node_indent('>')
+    .set_choices( choices_ai )
+
+  var _indent_dec = make_node_indent('<')
+    .set_choices( choices_ai )
 
   var _r = node()
     .set_choices( make_choices_for_navigation({action: act_move}))
@@ -466,18 +470,9 @@ var build_tree_command_mode = function() {
     .set_choice('v', node({action: act_visual_mode}))
     .set_choice('x', node({action: act_delete_char}))
     .set_choice('y', _y,  {action: act_yank_range})
-    .set_choice('>', _selections, {action: act_indent_increase} )
-    .set_choice('<', _selections, {action: act_indent_decrease} )
+    .set_choice('>', _indent_inc, {action: act_indent_increase} )
+    .set_choice('<', _indent_dec, {action: act_indent_decrease} )
 
-  return _r
-}
-
-var build_tree_visual_mode = function() {
-  var _r = node()
-    .set_choices( make_choices_for_navigation({action: act_move}) )
-    .set_choices( make_choices_for_digits() )
-    .set_choice('d', node({action: act_delete_current_selection, mode: COMMAND}) )
-    .set_choice('c', node({action: act_delete_current_selection, mode: INSERT}) )
   return _r
 }
 
@@ -488,6 +483,23 @@ var make_node_dy = function( line_char ) {
     .set_choice('w', node( {select_func: till_next_word} ))
     .set_choice('W', node( {select_func: till_next_word_plus} ))
   return e
+}
+
+var make_node_indent = function( line_char ) {
+  var e = node()
+    .set_choices( make_choices_for_navigation() )
+    .set_choice( line_char, node( {select_func: select_line} ) )
+  return e
+}
+
+
+var build_tree_visual_mode = function() {
+  var _r = node()
+    .set_choices( make_choices_for_navigation({action: act_move}) )
+    .set_choices( make_choices_for_digits() )
+    .set_choice('d', node({action: act_delete_current_selection, mode: COMMAND}) )
+    .set_choice('c', node({action: act_delete_current_selection, mode: INSERT}) )
+  return _r
 }
 
 var make_choices_for_navigation = function(params) {
