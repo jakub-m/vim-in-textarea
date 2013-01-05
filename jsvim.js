@@ -543,35 +543,17 @@ var make_choices_for_digits = function(){
  * is position of the element and len is length of element. len can be 0 */
 
 var find_word = function( text, pos ) {
-//  var p = /(\s(?=\S))|(\w(?=\W))|(\S(?=\s))|(\W(?=\w))/g
-  var p = /(\s(?=\S))|([^\u0000-\u002f\u003a-\u0040\u005b-\u0060\u007b-\u00bf](?=[\u0000-\u002f\u003a-\u0040\u005b-\u0060\u007b-\u00bf]))|(\S(?=\s))|([\u0000-\u002f\u003a-\u0040\u005b-\u0060\u007b-\u00bf](?=[^\u0000-\u002f\u003a-\u0040\u005b-\u0060\u007b-\u00bf]))/g
-  return __find_word( text, pos, p )
+  var m = '(\\s(?=\\S))|([^W](?=[W]))|(\\S(?=\\s))|([W](?=[^W]))'.replace(/W/g,'\\u0000-\\u002f\\u003a-\\u0040\\u005b-\\u0060\\u007b-\\u00bf')
+  var p = new RegExp( m,'g' )
+  return __find_regex_break( p, text, pos )
 }
-
-// todo : refactor this mess
 
 // non ascii unicode
 ///[\u0000-\u002f\u003a-\u0040\u005b-\u0060\u007b-\u00bf]/
 
-
 var find_word_plus = function(text, pos) {
   var p = /(\s(?=\S))|(\S(?=\s))/g
-  return __find_word(text, pos, p)
-}
-
-var __find_word = function( text, pos, regex ) {
-  var m, ileft = 0, iright
-  while ( (m=regex.exec(text)) !== null ) {
-    var i = m.index + 1
-    if ((ileft === undefined) || (i <= pos)) {
-      ileft = i
-    }
-    if ((iright === undefined) && (i > pos)) {
-      iright = i
-    }
-  }
-  iright = (iright === undefined) ? (text.length) : iright
-  return [ileft, iright - ileft]
+  return __find_regex_break(p, text, pos)
 }
 
 var find_word_with_spaces_after = function(text, pos) {
@@ -754,15 +736,35 @@ var __select_quotes = function(quote, text, pos) {
 
 var select_paragraph = function(text, pos) {
   var regex = /\n\s*\n/g
+  return __find_regex(regex, text, pos)
+}
+
+var __find_regex = function(regex, text, pos ) {
   var m, ileft = 0, iright
   while ( (m=regex.exec(text)) !== null ) {
-    var i0 = m.index + m[0].length
-    if ((ileft === undefined) || (i0 <= pos)) {
-      ileft = i0
+    var i = m.index + m[0].length
+    if ((ileft === undefined) || (i <= pos)) {
+      ileft = i
     }
-    var i1 = m.index
-    if ((iright === undefined) && (i1 > pos)) {
-      iright = i1
+    i = m.index
+    if ((iright === undefined) && (i > pos)) {
+      iright = i
+    }
+  }
+  iright = (iright === undefined) ? (text.length) : iright
+  return [ileft, iright - ileft]
+}
+
+/* todo: merge __find_regex and __find_regex_break */
+var __find_regex_break = function( regex, text, pos ) {
+  var m, ileft = 0, iright
+  while ( (m=regex.exec(text)) !== null ) {
+    var i = m.index + 1
+    if ((ileft === undefined) || (i <= pos)) {
+      ileft = i
+    }
+    if ((iright === undefined) && (i > pos)) {
+      iright = i
     }
   }
   iright = (iright === undefined) ? (text.length) : iright

@@ -173,8 +173,9 @@ test('Select bracket', function(){
 
 test('Select paragraph', function(){
   var t = "abc\n\ndef\n\nghi"
-  var sel = function(t, p){ return select_paragraph(t, p) }
-  var sel2 = function(t,p){ return d_with_whitespaces_after(select_paragraph)(t, p) }
+  //       012 3 4567 8 9012
+  var sel = function(x,p){ return select_paragraph(x, p) }
+  var sel2 = function(x,p){ return d_with_whitespaces_after(select_paragraph)(x, p) }
   deepEqual( sel(t,1), [0,3] )
   deepEqual( sel(t,6), [5,3] )
   deepEqual( sel(t,11), [10,3] )
