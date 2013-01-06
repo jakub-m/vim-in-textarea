@@ -8,11 +8,8 @@ Implemented as a single module in JavaScript, no jQuery needed.  By default, it
 does not log anything (i.e., if it is in *command* or *insert* mode), neither
 it alters textarea look or style.
 
-The final goal is to embed it into a **browser extension** and use to edit text
-areas freely. If you have spare time to roll out a simple extension (e.g., with
-[Greasemonkey][greasemonkey]), mail me.
-
-[greasemonkey]: http://en.wikipedia.org/wiki/Greasemonkey
+You can install [an experimental extension][extension] that will attach vim script to all textarea elements.
+[extension]:http://crossrider.com/apps/23338/install_page
 
 It is still in development, and it was tested with a few selected browsers/OS configurations.
 
@@ -20,12 +17,13 @@ It is still in development, and it was tested with a few selected browsers/OS co
 
 * single JS file
 * no external dependencies (e.g, jQuery)
-* supported visual mode (`v`)
-* yank (`y`), delete (`d`), paste (`p`)
+* supported visual mode `v`
+* yank `y`, delete `d`, paste `p`
 * preserve indention on `Enter`
+* indent paragraphs, e.g. `>ap`
 * delete / yank words and brackets (`daw`, `diw`, `ca[`, ...)
-* undo (`u`)
-* repeat commands (`5dd`)
+* undo `u`
+* repeat commands, e.g. `5dd`
 * ...and more!
 
 # Available commands #
