@@ -24,45 +24,21 @@ It is still in development, and it was tested with a few selected browsers/OS co
 * delete / yank words and brackets (`daw`, `diw`, `ca[`, ...)
 * undo `u`
 * repeat commands, e.g. `5dd`
-* ...and more!
+* ...and [more][available commands]!
 
-# Available commands #
-
-Currently available commands (automagically generated from command tree):
-
-    $ 0 1 2 3 4 5 6 7 8 9 <Backspace> <Down> <Enter> <Left> <Right> <Up> A B C D E G J O P W a b e h i j k l o p s u v w x
-    <: $ 0 < <Backspace> <Down> <Enter> <Left> <Right> <Up> B E G W b e h j k l w
-    <a: " ' ( ) < > W [ ] p w { }
-    <gg
-    <i: " ' ( ) < > W [ ] p w { }
-    >: $ 0 <Backspace> <Down> <Enter> <Left> <Right> <Up> > B E G W b e h j k l w
-    >a: " ' ( ) < > W [ ] p w { }
-    >gg
-    >i: " ' ( ) < > W [ ] p w { }
-    c: $ 0 <Backspace> <Down> <Enter> <Left> <Right> <Up> B E G W b c e h j k l w
-    ca: " ' ( ) < > W [ ] p w { }
-    cgg
-    ci: " ' ( ) < > W [ ] p w { }
-    d: $ 0 <Backspace> <Down> <Enter> <Left> <Right> <Up> B E G W b d e h j k l w
-    da: " ' ( ) < > W [ ] p w { }
-    dgg
-    di: " ' ( ) < > W [ ] p w { }
-    gg
-    y: $ 0 <Backspace> <Down> <Enter> <Left> <Right> <Up> B E G W b e h j k l w y
-    ya: " ' ( ) < > W [ ] p w { }
-    ygg
-    yi: " ' ( ) < > W [ ] p w { }
+[available commands]:https://github.com/jakub-m/vim-in-textarea/wiki/Available-commands
 
 # Licensing and author #
 
-    This work is released under [GNU GPL version 3][gpl] licence. Exceptions are
-    possible for commercial or closed source works.  If you use the script, **let
-    me know**! I am happy to hear your feedback and see the script working in the
-    wild.
+This work is released under [GNU GPL version 3][gpl] licence. Exceptions are
+possible for commercial or closed source works.  If you use the script, **let
+me know**! I am happy to hear your feedback and see the script working in the
+wild.
 
-    [gpl]: http://www.gnu.org/licenses/gpl.html
+[gpl]: http://www.gnu.org/licenses/gpl.html
 
 Author: [Jakub Mikians][linkedin]
 
 [linkedin]: http://www.linkedin.com/pub/jakub-mikkians/19/549/608
+
 
