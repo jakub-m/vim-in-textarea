@@ -37,8 +37,10 @@ wild.
 
 [gpl]: http://www.gnu.org/licenses/gpl.html
 
-Author: [Jakub Mikians][linkedin]
+Author: [Jakub Mikians], see his profile on [LinkedIn][linkedin]
 
-[linkedin]: http://www.linkedin.com/pub/jakub-mikkians/19/549/608
+[linkedin]: http://goo.gl/2r2Lg
+
+
 
 
