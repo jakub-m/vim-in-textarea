@@ -37,10 +37,10 @@ wild.
 
 [gpl]: http://www.gnu.org/licenses/gpl.html
 
-Author: [Jakub Mikians][mymail], see his profile on [LinkedIn][linkedin]
+Author: Jakub Mikians, see his profile on [LinkedIn][linkedin].
+Contact: *jakub dot mikians at gmail dot com*
 
 [linkedin]: http://www.linkedin.com/pub/jakub-mikians/19/549/608
-[mymail]: mailto@jakub.mikians-AT-gmail-com
 
 
 
