@@ -39,7 +39,7 @@ wild.
 
 Author: [Jakub Mikians], see his profile on [LinkedIn][linkedin]
 
-[linkedin]: http://goo.gl/2r2Lg
+[linkedin]: http://www.linkedin.com/pub/jakub-mikians/19/549/608
 
 
 
