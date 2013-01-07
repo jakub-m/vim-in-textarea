@@ -40,7 +40,7 @@ wild.
 Author: [Jakub Mikians][mymail], see his profile on [LinkedIn][linkedin]
 
 [linkedin]: http://www.linkedin.com/pub/jakub-mikians/19/549/608
-[mymail]: mailto@jakub.mikians AT gmail com
+[mymail]: jakub.mikians-AT-gmail-com
 
 
 
