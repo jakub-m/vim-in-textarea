@@ -2,7 +2,7 @@
 
 Add a subset of VIM functionality to textarea. Check online jsfiddle demo [here][demo-link].
 
-[demo-link]: http://jsfiddle.net/gh/gist/mootools/1.2/4397764/
+[demo-link]: http://jsfiddle.net/YBaHC/1/
 
 Implemented as a single module in JavaScript, no jQuery needed.  By default, it
 does not log anything (i.e., if it is in *command* or *insert* mode), neither
