@@ -30,12 +30,9 @@ It is still in development, and it was tested with a few selected browsers/OS co
 
 # Licensing and author #
 
-This work is released under [GNU GPL version 3][gpl] licence. Exceptions are
-possible for commercial or closed source works.  If you use the script, **let
-me know**! I am happy to hear your feedback and see the script working in the
-wild.
+This work is released under [BSD 3-Clause License][bsd] licence. If you use the script, **let me know**! I am happy to hear your feedback and see the script working in the wild.
 
-[gpl]: http://www.gnu.org/licenses/gpl.html
+[bsd]:http://opensource.org/licenses/BSD-3-Clause
 
 Author: Jakub Mikians, see his profile on [LinkedIn][linkedin].
 
